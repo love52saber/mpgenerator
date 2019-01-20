@@ -51,6 +51,9 @@ public class Mp3 {
         // gc.setServiceImplName("%sServiceDiy");
         // gc.setControllerName("%sAction");
 
+        gc.setBaseResultMap(true);//xml文件生成baseresult
+        gc.setBaseColumnList(true);//xml文件生成baseresult
+
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -125,7 +128,9 @@ public class Mp3 {
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
 //        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
-        strategy.setInclude(scanner("表名"));
+//        strategy.setInclude(new String[]{"FW_AUTH_WS_INFO","FW_AUTH_WS_DD","FW_AUTH_DD_DC_DETAIL","FW_AUTH_DD",
+//                "FW_AUTH_WS_DC_DD_OPT", "FW_AUTH_DC_DD_INVOLVE_OPT"});
+        strategy.setInclude(new String[]{"FW_AUTH_WS_DC_DD_OPT"});
         strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix("FW_AUTH");
