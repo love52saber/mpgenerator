@@ -3,16 +3,19 @@ package com.hedian.mpgenerator;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Mp3 {
@@ -41,33 +44,35 @@ public class Mp3 {
 
         // 1数据源配置
         //1.1mysql
-//        DataSourceConfig dsc = new DataSourceConfig();
-//        dsc.setUrl("jdbc:mysql://localhost:3306/ant?useUnicode=true&useSSL=false&characterEncoding=utf8");
-//        // dsc.setSchemaName("public");
-//        dsc.setDriverName("com.mysql.jdbc.Driver");
-//        dsc.setUsername("root");
-//        dsc.setPassword("密码");
-//        mpg.setDataSource(dsc);
-        //1.2oracle
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:oracle:thin:@47.96.150.182:1521:akydb");
-        // dsc.setSchemaName("public");
-        dsc.setDriverName("oracle.jdbc.driver.OracleDriver");
-        dsc.setUsername("jsasst");
-        dsc.setPassword("jsasst2018");
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsc.setUsername("root");
+        dsc.setPassword("hedian12#$");
+        dsc.setUrl("jdbc:mysql://106.14.224.216:3306/suzhou_risk_test?serverTimezone=GMT%2B8&useUnicode=true" +
+                "&characterEncoding=utf-8");
         mpg.setDataSource(dsc);
+        //1.2oracle
+//        DataSourceConfig dsc = new DataSourceConfig();
+//        dsc.setUrl("jdbc:oracle:thin:@47.96.150.182:1521:akydb");
+//        // dsc.setSchemaName("public");
+//        dsc.setDriverName("oracle.jdbc.driver.OracleDriver");
+//        dsc.setUsername("jsasst");
+//        dsc.setPassword("jsasst2018");
+//        mpg.setDataSource(dsc);
 
         // 2数据库表设置 策略配置
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setLogicDeleteFieldName("USEABLE");
+        strategy.setLogicDeleteFieldName("use_flag");
 
         ArrayList<TableFill> tableFillList = new ArrayList<>();
-        tableFillList.add(new TableFill("CREATE_TIME", FieldFill.INSERT));
-        tableFillList.add(new TableFill("USEABLE", FieldFill.INSERT));
-        tableFillList.add(new TableFill("MODIFY_TIME", FieldFill.UPDATE));
-        tableFillList.add(new TableFill("TANK_AREA_ID", FieldFill.INSERT));
+        tableFillList.add(new TableFill("del_flag", FieldFill.INSERT));
+        tableFillList.add(new TableFill("use_flag", FieldFill.INSERT));
+        tableFillList.add(new TableFill("create_id", FieldFill.INSERT));
+        tableFillList.add(new TableFill("create_time", FieldFill.INSERT));
+        tableFillList.add(new TableFill("modified_id", FieldFill.UPDATE));
+        tableFillList.add(new TableFill("modified_time", FieldFill.UPDATE));
         strategy.setTableFillList(tableFillList);
 
 //        strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
@@ -76,10 +81,11 @@ public class Mp3 {
 //        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
 //        strategy.setInclude(new String[]{"FW_AUTH_WS_INFO","FW_AUTH_WS_DD","FW_AUTH_DD_DC_DETAIL","FW_AUTH_DD",
 //                "FW_AUTH_WS_DC_DD_OPT", "FW_AUTH_DC_DD_INVOLVE_OPT"});
-        strategy.setInclude(new String[]{"FW_AUTH_TANK"});
-        strategy.setSuperEntityColumns("id");
+        strategy.setInclude(new String[]{"tbl_quota_check"});
+//        strategy.setSuperEntityColumns("id");   //此行放开不生成id字段
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix("FW_AUTH");
+//        strategy.setTablePrefix("tbl_");
+        strategy.setEntityTableFieldAnnotationEnable(false);//放开下划线字段不生成注解，可能导致错误
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 
@@ -108,7 +114,10 @@ public class Mp3 {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.jsasst.platfrom");
+        pc.setParent("com.hedian.platfrom.customer");
+        pc.setMapper("persistence.mapper");
+        pc.setXml("persistence.mapper.xml");
+        pc.setEntity("persistence.pojo");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
