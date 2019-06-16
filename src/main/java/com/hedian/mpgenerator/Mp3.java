@@ -1,21 +1,19 @@
 package com.hedian.mpgenerator;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Mp3 {
@@ -50,6 +48,10 @@ public class Mp3 {
         dsc.setPassword("hedian12#$");
         dsc.setUrl("jdbc:mysql://106.14.224.216:3306/suzhou_risk_test?serverTimezone=GMT%2B8&useUnicode=true" +
                 "&characterEncoding=utf-8");
+//        dsc.setTypeConvert((globalConfig, fieldType) -> {
+//
+//        });
+        dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
         //1.2oracle
 //        DataSourceConfig dsc = new DataSourceConfig();
@@ -81,11 +83,11 @@ public class Mp3 {
 //        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
 //        strategy.setInclude(new String[]{"FW_AUTH_WS_INFO","FW_AUTH_WS_DD","FW_AUTH_DD_DC_DETAIL","FW_AUTH_DD",
 //                "FW_AUTH_WS_DC_DD_OPT", "FW_AUTH_DC_DD_INVOLVE_OPT"});
-        strategy.setInclude(new String[]{"tbl_quota_check"});
+        strategy.setInclude(new String[]{"tbl_emgcy_resc_plan"});
 //        strategy.setSuperEntityColumns("id");   //此行放开不生成id字段
         strategy.setControllerMappingHyphenStyle(true);
-//        strategy.setTablePrefix("tbl_");
-        strategy.setEntityTableFieldAnnotationEnable(false);//放开下划线字段不生成注解，可能导致错误
+        strategy.setTablePrefix("");//若没有也得填写""否则不生成@tableName注解
+        strategy.setEntityTableFieldAnnotationEnable(true);//false则下划线字段不生成注解，可能导致错误
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 
