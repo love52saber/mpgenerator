@@ -134,7 +134,7 @@ public abstract class AbstractTemplateEngine {
                 if (null != tableInfo.getDtoName() && null != pathInfo.get(ConstVal.DTO_PATH)) {
                     String dtoFile = String.format((pathInfo.get(ConstVal.DTO_PATH) + File.separator + tableInfo.getDtoName() + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.DTO, dtoFile)) {
-                        writer(objectMap, templateFilePath(template.getController()), dtoFile);
+                        writer(objectMap, templateFilePath(template.getDto()), dtoFile);
                     }
                 }
                 // query.java
