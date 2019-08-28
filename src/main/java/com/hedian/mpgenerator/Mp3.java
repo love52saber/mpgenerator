@@ -46,11 +46,18 @@ public class Mp3 {
         //1.1mysql
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+//        dsc.setUsername("root");
+//        dsc.setPassword("hedian12#$");
+//        dsc.setUrl("jdbc:mysql://106.14.224.216:3306/suzhou_risk_test?serverTimezone=GMT%2B8&useUnicode=true" +
+//                "&characterEncoding=utf-8");
+//        mpg.setDataSource(dsc);
+
         dsc.setUsername("root");
-        dsc.setPassword("hedian12#$");
-        dsc.setUrl("jdbc:mysql://106.14.224.216:3306/suzhou_risk_test?serverTimezone=GMT%2B8&useUnicode=true" +
+        dsc.setPassword("123456");
+        dsc.setUrl("jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8&useUnicode=true" +
                 "&characterEncoding=utf-8");
         mpg.setDataSource(dsc);
+
         //1.2oracle
 //        DataSourceConfig dsc = new DataSourceConfig();
 //        dsc.setUrl("jdbc:oracle:thin:@47.96.150.182:1521:akydb");
@@ -81,11 +88,11 @@ public class Mp3 {
 //        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
 //        strategy.setInclude(new String[]{"FW_AUTH_WS_INFO","FW_AUTH_WS_DD","FW_AUTH_DD_DC_DETAIL","FW_AUTH_DD",
 //                "FW_AUTH_WS_DC_DD_OPT", "FW_AUTH_DC_DD_INVOLVE_OPT"});
-        strategy.setInclude(new String[]{"tbl_quota_check"});
+        strategy.setInclude(new String[]{"tbl_teacher"});
 //        strategy.setSuperEntityColumns("id");   //此行放开不生成id字段
         strategy.setControllerMappingHyphenStyle(true);
-//        strategy.setTablePrefix("tbl_");
-        strategy.setEntityTableFieldAnnotationEnable(false);//放开下划线字段不生成注解，可能导致错误
+        strategy.setTablePrefix("tbl_");//即使没有前缀也不能注释，否则生成的实体缺少注解
+        strategy.setEntityTableFieldAnnotationEnable(true);//false下划线字段不生成注解，可能导致错误
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 
@@ -113,8 +120,9 @@ public class Mp3 {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
+
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.hedian.platfrom.customer");
+        pc.setParent("com.hedain.transactiondemo");
         pc.setMapper("persistence.mapper");
         pc.setXml("persistence.mapper.xml");
         pc.setEntity("persistence.pojo");
